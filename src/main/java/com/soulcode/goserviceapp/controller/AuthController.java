@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value="/auth")
 public class AuthController {
 
-
-
     @GetMapping(value = "/login")
     public String login() {
         return "login";
@@ -20,5 +18,10 @@ public class AuthController {
     @GetMapping(value = "/cadastro")
     public String cadastro() {
         return "cadastroCliente";
+    }
+
+    @GetMapping(value = "/password/new")
+    public String alterarSenha(){
+        return "alterarSenha";
     }
 }
