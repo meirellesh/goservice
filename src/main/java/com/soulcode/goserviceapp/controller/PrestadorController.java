@@ -9,13 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PrestadorController {
 
     @GetMapping(value = "/dados")
-    public String dados(){
+    public String dados() {
         return "dadosPrestador";
     }
 
     @GetMapping(value = "/agenda")
-    public String agenda(){
-        return  "agendaPrestador";
+    public String agenda() {
+        return "agendaPrestador";
     }
-
 }

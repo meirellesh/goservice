@@ -3,9 +3,11 @@ package com.soulcode.goserviceapp.service;
 import com.soulcode.goserviceapp.domain.Cliente;
 import com.soulcode.goserviceapp.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class ClienteService {
 
     @Autowired
@@ -16,12 +18,10 @@ public class ClienteService {
         if(cliente.isPresent()){
             return cliente.get();
         } else {
-            throw new RuntimeException("Cliente não encontrado.");
+            throw  new RuntimeException("Cliente não encontrado");
         }
-
     }
-
-    public Cliente update(Cliente cliente){
+    public Cliente update(Cliente cliente) {
         Cliente updatedCliente = this.findById(cliente.getId());
         updatedCliente.setNome(cliente.getNome());
         updatedCliente.setEmail(cliente.getEmail());
@@ -29,8 +29,5 @@ public class ClienteService {
         updatedCliente.setCpf(cliente.getCpf());
         updatedCliente.setDataNascimento(cliente.getDataNascimento());
         return clienteRepository.save(updatedCliente);
-
     }
-
-
 }

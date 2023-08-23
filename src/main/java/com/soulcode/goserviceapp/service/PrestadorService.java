@@ -12,12 +12,12 @@ public class PrestadorService {
     @Autowired
     private PrestadorRepository prestadorRepository;
 
-    public Prestador findById(Long Id){
-        Optional<Prestador> prestador = prestadorRepository.findById(Id);
+    public Prestador findById(Long id){
+        Optional<Prestador> prestador = prestadorRepository.findById(id);
         if(prestador.isPresent()){
             return prestador.get();
-        } else{
-            throw new RuntimeException("Prestador não encontrado.");
+        }else{
+            throw new RuntimeException("Prestador não encontrado");
         }
     }
 
@@ -29,6 +29,4 @@ public class PrestadorService {
         updatedPrestador.setTaxaPorHora(prestador.getTaxaPorHora());
         return prestadorRepository.save(updatedPrestador);
     }
-
-
 }
