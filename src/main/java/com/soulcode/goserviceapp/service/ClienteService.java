@@ -13,14 +13,15 @@ public class ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public Cliente findById(Long id){
+    public Cliente findById(Long id) {
         Optional<Cliente> cliente = clienteRepository.findById(id);
-        if(cliente.isPresent()){
+        if (cliente.isPresent()) {
             return cliente.get();
         } else {
-            throw  new RuntimeException("Cliente não encontrado");
+            throw new RuntimeException("Cliente não encontrado");
         }
     }
+
     public Cliente update(Cliente cliente) {
         Cliente updatedCliente = this.findById(cliente.getId());
         updatedCliente.setNome(cliente.getNome());
@@ -30,3 +31,4 @@ public class ClienteService {
         updatedCliente.setDataNascimento(cliente.getDataNascimento());
         return clienteRepository.save(updatedCliente);
     }
+}
