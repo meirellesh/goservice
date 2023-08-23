@@ -42,4 +42,4 @@ public class ServicoService {
         updatedServico.setCategoria(servico.getCategoria());
         return servicoRepository.save(updatedServico);
     }
-}
+

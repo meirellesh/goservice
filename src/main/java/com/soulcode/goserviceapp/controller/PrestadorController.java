@@ -17,4 +17,3 @@ public class PrestadorController {
     public String agenda() {
         return "agendaPrestador";
     }
-}

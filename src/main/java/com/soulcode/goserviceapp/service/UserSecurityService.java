@@ -24,4 +24,3 @@ public class UserSecurityService implements UserDetailsService {
         }
         throw new UsernameNotFoundException("Usuário não encontrado.");
     }
-}

@@ -22,4 +22,3 @@ public class ClienteController {
     public String historico() {
         return "historicoCliente";
     }
-}

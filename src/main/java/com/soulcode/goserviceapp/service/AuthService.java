@@ -46,4 +46,3 @@ public class AuthService {
         }
         throw new RuntimeException("Autenticação necessária.");
     }
-}
