@@ -22,7 +22,7 @@ public class AuthController {
     @GetMapping(value = "/login")
     public ModelAndView login(@RequestParam(name = "error", required = false) String error) {
         ModelAndView mv = new ModelAndView("login");
-        if(error != null) {
+        if (error != null) {
             mv.addObject("errorMessage", "Erro ao autenticar no sistema. Verifique suas credenciais.");
         }
         return mv;
@@ -49,3 +49,4 @@ public class AuthController {
             return "redirect:/auth/cadastro";
         }
     }
+}
