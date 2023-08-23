@@ -29,4 +29,3 @@ public class PrestadorService {
         updatedPrestador.setTaxaPorHora(prestador.getTaxaPorHora());
         return prestadorRepository.save(updatedPrestador);
     }
-}

@@ -17,4 +17,3 @@ public class AdministradorController {
     public String usuarios() {
         return "usuariosAdmin";
     }
-}

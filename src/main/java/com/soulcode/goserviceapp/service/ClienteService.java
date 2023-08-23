@@ -30,4 +30,3 @@ public class ClienteService {
         updatedCliente.setDataNascimento(cliente.getDataNascimento());
         return clienteRepository.save(updatedCliente);
     }
-}
