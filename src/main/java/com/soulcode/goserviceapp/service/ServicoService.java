@@ -1,6 +1,8 @@
 package com.soulcode.goserviceapp.service;
 
+import com.soulcode.goserviceapp.domain.Prestador;
 import com.soulcode.goserviceapp.domain.Servico;
+import com.soulcode.goserviceapp.repository.PrestadorRepository;
 import com.soulcode.goserviceapp.repository.ServicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,9 @@ import java.util.Optional;
 public class ServicoService {
     @Autowired
     private ServicoRepository servicoRepository;
+
+    @Autowired
+    private PrestadorRepository prestadorRepository;
 
     public List<Servico> findAll() {
         return servicoRepository.findAll();
@@ -42,5 +47,12 @@ public class ServicoService {
         updatedServico.setCategoria(servico.getCategoria());
         return servicoRepository.save(updatedServico);
     }
+
+    public List<Prestador> findByServicoId(Long id){
+        return prestadorRepository.findByServicoId(id);
+    }
+
+
+
 }
 
