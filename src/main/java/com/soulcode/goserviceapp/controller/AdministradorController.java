@@ -2,6 +2,9 @@ package com.soulcode.goserviceapp.controller;
 
 import com.soulcode.goserviceapp.domain.Usuario;
 import com.soulcode.goserviceapp.service.UsuarioService;
+import com.soulcode.goserviceapp.service.exceptions.SenhaIncorretaException;
+import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoAutenticadoException;
+import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,5 +50,26 @@ public class AdministradorController {
             attributes.addFlashAttribute("errorMessage", "Erro ao cadastrar novo usuário.");
         }
         return "redirect:/admin/usuarios";
+    }
+
+    @PostMapping(value="/usuarios/disable")
+    public String disableUser(@RequestParam(name="usuarioId")Long id, RedirectAttributes attributes) {
+        try {
+            usuarioService.disableUser(id);
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao desativar usuário.");
+        }
+        return "redirect:/admin/usuarios";
+    }
+    @PostMapping(value="/usuarios/enable")
+    public String enableUser(@RequestParam(name="usuarioId")Long id, RedirectAttributes attributes) {
+        try {
+            usuarioService.disableUser(id);
+        }
+        catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao ativar usuário.");
+        }
+        return "redirect:/admin/usuarios";
+
     }
 }
