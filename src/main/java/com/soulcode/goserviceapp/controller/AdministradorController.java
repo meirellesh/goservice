@@ -9,6 +9,7 @@ import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoAutenticadoExcepti
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,19 @@ public class AdministradorController {
         return "servicosAdmin";
     }
 
+
+    @GetMapping(value = "/servicos")
+    public ModelAndView servicos(){
+        ModelAndView mv = new ModelAndView("servicosAdmin");
+        try {
+            List<Servico> servicos = servicoService.findAll();
+            mv.addObject("servicos", servicos);
+        } catch(Exception ex) {
+            mv.addObject("errorMessage", "Erro ao buscar os dados do Serviço.");
+        }
+        return mv;
+    }
+
     @PostMapping(value="/servicos")
     public String createServico(Servico servico, RedirectAttributes attributes){
         try{
@@ -43,7 +57,6 @@ public class AdministradorController {
         }
         return "redirect:/admin/servicos";
     }
-
 
 
     @GetMapping(value = "/usuarios")
