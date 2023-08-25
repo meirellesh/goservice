@@ -49,11 +49,8 @@ public class ServicoService {
         return servicoRepository.save(updatedServico);
     }
 
-    public List<Prestador> findByServicoId(Long id){
+    public List<Prestador> findByServicoId(Long id) {
         return prestadorRepository.findByServicoId(id);
     }
-
-
-
 }
 
