@@ -1,6 +1,8 @@
 package com.soulcode.goserviceapp.controller;
 
+import com.soulcode.goserviceapp.domain.Servico;
 import com.soulcode.goserviceapp.domain.Usuario;
+import com.soulcode.goserviceapp.service.ServicoService;
 import com.soulcode.goserviceapp.service.UsuarioService;
 import com.soulcode.goserviceapp.service.exceptions.SenhaIncorretaException;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoAutenticadoException;
@@ -23,10 +25,26 @@ public class AdministradorController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private ServicoService servicoService;
+
     @GetMapping(value = "/servicos")
     public String servicos() {
         return "servicosAdmin";
     }
+
+    @PostMapping(value="/servicos")
+    public String createServico(Servico servico, RedirectAttributes attributes){
+        try{
+            servicoService.createServico(servico);
+            attributes.addFlashAttribute("successMessage","Novo Serviço adicionado.");
+        } catch(Exception ex){
+            attributes.addFlashAttribute("errorMessage", "Erro ao cadastrar novo serviço.");
+        }
+        return "redirect:/admin/servicos";
+    }
+
+
 
     @GetMapping(value = "/usuarios")
     public ModelAndView usuarios() {
@@ -56,6 +74,8 @@ public class AdministradorController {
     public String disableUser(@RequestParam(name="usuarioId")Long id, RedirectAttributes attributes) {
         try {
             usuarioService.disableUser(id);
+        } catch(UsuarioNaoEncontradoException ex){
+            attributes.addFlashAttribute("errorMessage",ex.getMessage());
         } catch (Exception ex) {
             attributes.addFlashAttribute("errorMessage", "Erro ao desativar usuário.");
         }
@@ -65,7 +85,8 @@ public class AdministradorController {
     public String enableUser(@RequestParam(name="usuarioId")Long id, RedirectAttributes attributes) {
         try {
             usuarioService.disableUser(id);
-        }
+        } catch(UsuarioNaoEncontradoException ex){
+        attributes.addFlashAttribute("errorMessage",ex.getMessage()); }
         catch (Exception ex) {
             attributes.addFlashAttribute("errorMessage", "Erro ao ativar usuário.");
         }
