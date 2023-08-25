@@ -24,7 +24,7 @@ public class PrestadorService {
         if (prestador.isPresent()) {
             return prestador.get();
         } else {
-            throw new RuntimeException("Prestador não encontrado");
+            throw new UsuarioNaoEncontradoException();
         }
     }
 
