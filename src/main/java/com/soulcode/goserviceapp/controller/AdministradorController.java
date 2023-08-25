@@ -4,12 +4,9 @@ import com.soulcode.goserviceapp.domain.Servico;
 import com.soulcode.goserviceapp.domain.Usuario;
 import com.soulcode.goserviceapp.service.ServicoService;
 import com.soulcode.goserviceapp.service.UsuarioService;
-import com.soulcode.goserviceapp.service.exceptions.SenhaIncorretaException;
-import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoAutenticadoException;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,44 +27,36 @@ public class AdministradorController {
     private ServicoService servicoService;
 
     @GetMapping(value = "/servicos")
-    public String servicos() {
-        return "servicosAdmin";
-    }
-
-
-    @GetMapping(value = "/servicos")
-    public ModelAndView servicos(){
+    public ModelAndView servicos() {
         ModelAndView mv = new ModelAndView("servicosAdmin");
         try {
             List<Servico> servicos = servicoService.findAll();
             mv.addObject("servicos", servicos);
-        } catch(Exception ex) {
-            mv.addObject("errorMessage", "Erro ao buscar os dados do Serviço.");
+        } catch (Exception ex) {
+            mv.addObject("errorMessage", "Erro ao buscar dados de serviços.");
         }
         return mv;
     }
 
-    @PostMapping(value="/servicos")
-    public String createServico(Servico servico, RedirectAttributes attributes){
-        try{
+    @PostMapping(value = "/servicos")
+    public String createService(Servico servico, RedirectAttributes attributes) {
+        try {
             servicoService.createServico(servico);
-            attributes.addFlashAttribute("successMessage","Novo Serviço adicionado.");
-        } catch(Exception ex){
-            attributes.addFlashAttribute("errorMessage", "Erro ao cadastrar novo serviço.");
+            attributes.addFlashAttribute("successMessage", "Novo serviço adicionado.");
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao adicionar novo serviço.");
         }
         return "redirect:/admin/servicos";
     }
 
-
     @GetMapping(value = "/usuarios")
     public ModelAndView usuarios() {
-
         ModelAndView mv = new ModelAndView("usuariosAdmin");
         try {
             List<Usuario> usuarios = usuarioService.findAll();
             mv.addObject("usuarios", usuarios);
-        } catch(Exception ex) {
-            mv.addObject("errorMessage", "Erro ao buscar os dados do Usuário.");
+        } catch (Exception ex) {
+            mv.addObject("errorMessage", "Erro ao buscar dados de usuários.");
         }
         return mv;
     }
@@ -83,27 +72,27 @@ public class AdministradorController {
         return "redirect:/admin/usuarios";
     }
 
-    @PostMapping(value="/usuarios/disable")
-    public String disableUser(@RequestParam(name="usuarioId")Long id, RedirectAttributes attributes) {
+    @PostMapping(value = "/usuarios/disable")
+    public String disableUser(@RequestParam(name = "usuarioId") Long id, RedirectAttributes attributes) {
         try {
             usuarioService.disableUser(id);
-        } catch(UsuarioNaoEncontradoException ex){
-            attributes.addFlashAttribute("errorMessage",ex.getMessage());
+        } catch (UsuarioNaoEncontradoException ex) {
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
         } catch (Exception ex) {
-            attributes.addFlashAttribute("errorMessage", "Erro ao desativar usuário.");
+            attributes.addFlashAttribute("errorMessage", "Erro ao desabilitar usuário.");
         }
         return "redirect:/admin/usuarios";
     }
-    @PostMapping(value="/usuarios/enable")
-    public String enableUser(@RequestParam(name="usuarioId")Long id, RedirectAttributes attributes) {
+
+    @PostMapping(value = "/usuarios/enable")
+    public String enableUser(@RequestParam(name = "usuarioId") Long id, RedirectAttributes attributes) {
         try {
-            usuarioService.disableUser(id);
-        } catch(UsuarioNaoEncontradoException ex){
-        attributes.addFlashAttribute("errorMessage",ex.getMessage()); }
-        catch (Exception ex) {
-            attributes.addFlashAttribute("errorMessage", "Erro ao ativar usuário.");
+            usuarioService.enableUser(id);
+        } catch (UsuarioNaoEncontradoException ex) {
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao habilitar usuário.");
         }
         return "redirect:/admin/usuarios";
-
     }
 }
