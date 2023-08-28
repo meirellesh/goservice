@@ -37,6 +37,7 @@ public class PrestadorController {
             mv.addObject("prestador", prestador);
             List<Servico> especialidades = servicoService.findByPrestadorEmail(authentication.getName());
             mv.addObject("especialidades", especialidades);
+            List<Servico> servicos = servicoService.findAll();
         } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException ex) {
             mv.addObject("errorMessage", ex.getMessage());
         } catch (Exception ex) {
@@ -65,14 +66,33 @@ public class PrestadorController {
             prestadorService.removeServicoPrestador(authentication, id);
             attributes.addFlashAttribute("successMessage",
                     "Especialidade removida com sucesso");
-        } catch (UsuarioNaoEncontradoException | UsuarioNaoAutenticadoException | ServicoNaoEncontradoException ex){
-            attributes.addFlashAttribute("errorMessage",
-                    ex.getMessage());
+        }
+        catch (UsuarioNaoEncontradoException | UsuarioNaoAutenticadoException | ServicoNaoEncontradoException ex){
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
         }
         catch (Exception ex){
             attributes.addFlashAttribute("errorMessage",
                     "Erro ao remover especialidade");
     }
+        return "redirect:/prestador/dados";
+    }
+
+    @PostMapping(value = "/dados/especialidade/adicionar")
+    public String adicionarEspecialidade(Authentication authentication,
+                                         @RequestParam(name = "servicoId") Long id,
+                                         RedirectAttributes attributes){
+        try{
+            prestadorService.addServicoPrestador(authentication, id);
+            attributes.addFlashAttribute("successMessage",
+                    "Especialidade adicionada com sucesso");
+        }catch(UsuarioNaoEncontradoException | UsuarioNaoAutenticadoException | ServicoNaoEncontradoException ex
+            attributes.addFlashAttribute("errorMessage",
+                    "Erro ao adicionar especialidade");
+        }catch(Exception ex){
+            attributes.addFlashAttribute("errorMessage",
+                    "Erro ao adicionar especialidade");
+        }
+
         return "redirect:/prestador/dados";
     }
 
