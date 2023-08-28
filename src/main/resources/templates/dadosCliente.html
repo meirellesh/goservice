@@ -18,7 +18,7 @@
                 <div th:if="${successMessage != null}" th:text="${successMessage}" class="alert alert-success" role="alert"></div>
                 <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger" role="alert"></div>
 
-                <form method="post" th:action="@{/cliente/dados}">
+                <form method="post" th:if="${cliente != null}" th:action="@{/cliente/dados}">
                     <input type="hidden" name="id" th:field="*{cliente.id}">
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome<span class="text-danger">*</span></label>
