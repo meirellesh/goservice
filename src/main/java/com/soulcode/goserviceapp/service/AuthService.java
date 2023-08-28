@@ -23,7 +23,7 @@ public class AuthService {
     @Autowired
     private PasswordEncoder encoder;
 
-    public Cliente createCliente(Cliente cliente) {
+    public Cliente createCliente(Cliente cliente){
         String passwordEncoded = encoder.encode(cliente.getSenha());
         cliente.setSenha(passwordEncoded);
         cliente.setId(null);
@@ -31,14 +31,14 @@ public class AuthService {
     }
 
     @Transactional
-    public void updatePassword(Authentication authentication, String senhaAtual, String senhaNova) {
-        if (authentication != null && authentication.isAuthenticated()) {
+    public void updatePassword(Authentication authentication, String senhaAtual, String senhaNova){
+        if(authentication != null && authentication.isAuthenticated()) {
             String emailAuthenticated = authentication.getName();
             Optional<Usuario> usuario = usuarioRepository.findByEmail(emailAuthenticated);
-            if (usuario.isPresent()) {
+            if(usuario.isPresent()) {
                 String passwordEncoded = usuario.get().getSenha();
                 boolean passwordVerified = encoder.matches(senhaAtual, passwordEncoded);
-                if (passwordVerified) {
+                if(passwordVerified) {
                     String passwordEncodedNew = encoder.encode(senhaNova);
                     usuarioRepository.updatePasswordByEmail(passwordEncodedNew, emailAuthenticated);
                     return;

@@ -54,13 +54,13 @@ public class AgendamentoService {
     }
 
     public List<Agendamento> findByCliente(Authentication authentication){
-          Cliente cliente = clienteService.findAuthenticated(authentication);
-          return agendamentoRepository.findByClienteEmail(cliente.getEmail());
+        Cliente cliente = clienteService.findAuthenticated(authentication);
+        return agendamentoRepository.findByClienteEmail(cliente.getEmail());
     }
 
     public List<Agendamento> findByPrestador(Authentication authentication){
         Prestador prestador = prestadorService.findAuthenticated(authentication);
-        return agendamentoRepository.findByPrestadorEmail(prestador.getEmail());
+        return  agendamentoRepository.findByPrestadorEmail(prestador.getEmail());
     }
 
     public void cancelAgendaPrestador(Authentication authentication, Long id){
@@ -88,7 +88,7 @@ public class AgendamentoService {
     public void cancelAgendaCliente(Authentication authentication, Long id){
         Cliente cliente = clienteService.findAuthenticated(authentication);
         Agendamento agendamento = findById(id);
-        if(agendamento.getStatusAgendamento().equals(StatusAgendamento.AGUARDANDO_CONFIRMACAO)){
+        if (agendamento.getStatusAgendamento().equals(StatusAgendamento.AGUARDANDO_CONFIRMACAO)){
             agendamento.setStatusAgendamento(StatusAgendamento.CANCELADO_PELO_CLIENTE);
             agendamentoRepository.save(agendamento);
             return;
@@ -99,7 +99,7 @@ public class AgendamentoService {
     public void completeAgenda(Authentication authentication, Long id){
         Cliente cliente = clienteService.findAuthenticated(authentication);
         Agendamento agendamento = findById(id);
-        if(agendamento.getStatusAgendamento().equals(StatusAgendamento.CONFIRMADO)){
+        if (agendamento.getStatusAgendamento().equals(StatusAgendamento.CONFIRMADO)){
             agendamento.setStatusAgendamento(StatusAgendamento.CONCLUIDO);
             agendamentoRepository.save(agendamento);
             return;

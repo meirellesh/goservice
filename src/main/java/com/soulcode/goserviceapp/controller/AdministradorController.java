@@ -49,19 +49,42 @@ public class AdministradorController {
 
     @PostMapping(value = "/servicos/remover")
     public String removeService(@RequestParam(name = "servicoId") Long id, RedirectAttributes attributes) {
-        try{
+        try {
             servicoService.removeServicoById(id);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             attributes.addFlashAttribute("errorMessage", "Erro ao excluir serviço.");
         }
         return "redirect:/admin/servicos/";
     }
 
     @GetMapping(value = "/servicos/editar/{id}")
-    public String editService(@PathVariable Long id){
-        return "editarServico";
+    public ModelAndView editService(@PathVariable Long id) {
+        ModelAndView mv = new ModelAndView("editarServico");
+        try {
+            Servico servico = servicoService.findById(id);
+            mv.addObject("servico", servico);
+        } catch (ServicoNaoEncontradoException ex) {
+            mv.addObject("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            mv.addObject("errorMessage", "Erro ao buscar serviço.");
+        }
+        return mv;
     }
+
+    @PostMapping(value = "/servicos/editar")
+    public String updateService(Servico servico, RedirectAttributes attributes) {
+        try {
+            servicoService.update(servico);
+            attributes.addFlashAttribute("successMessage", "Serviço atualizado.");
+        } catch (ServicoNaoEncontradoException ex) {
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao atualizar serviço.");
+        }
+        return "redirect:/admin/servicos";
+    }
+
+
 
 
     @GetMapping(value = "/usuarios")

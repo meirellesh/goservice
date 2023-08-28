@@ -67,23 +67,23 @@ public class UsuarioService {
         Cliente cliente = new Cliente(u.getId(), u.getNome(), u.getEmail(), u.getSenha(), u.getPerfil(), u.getHabilitado());
         return usuarioRepository.save(cliente);
     }
+
     @Transactional
     public void disableUser(Long id){
         Optional<Usuario> usuario = usuarioRepository.findById(id);
-        if(usuario.isPresent()){
+        if (usuario.isPresent()){
             usuarioRepository.updateEnableById(false, id);
             return;
         }
         throw new UsuarioNaoEncontradoException();
     }
     @Transactional
-    public void enableUser(Long id){
+    public void enableUser(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
-        if(usuario.isPresent()){
+        if(usuario.isPresent()) {
             usuarioRepository.updateEnableById(true, id);
             return;
         }
         throw new UsuarioNaoEncontradoException();
     }
-
 }

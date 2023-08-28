@@ -26,7 +26,7 @@ public class ClienteService {
                 throw new UsuarioNaoEncontradoException();
             }
         } else {
-            throw  new UsuarioNaoAutenticadoException();
+            throw new UsuarioNaoAutenticadoException();
         }
     }
 
