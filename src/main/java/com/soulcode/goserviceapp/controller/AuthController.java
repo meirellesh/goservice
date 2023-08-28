@@ -1,5 +1,4 @@
 package com.soulcode.goserviceapp.controller;
-
 import com.soulcode.goserviceapp.domain.Cliente;
 import com.soulcode.goserviceapp.service.AuthService;
 import com.soulcode.goserviceapp.service.UsuarioService;
@@ -20,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping(value = "/auth")
 public class AuthController {
+
 
     @Autowired
     private AuthService authService;
@@ -64,12 +64,14 @@ public class AuthController {
     ) {
         try {
             authService.updatePassword(authentication, senhaAtual, senhaNova);
-            attributes.addFlashAttribute("successMessage", "Senha alterada.");
-        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException | SenhaIncorretaException ex) {
+
+            attributes.addFlashAttribute("successMessage", "Senha alterada com sucesso!");
+        } catch (UsuarioNaoAutenticadoException | SenhaIncorretaException | UsuarioNaoEncontradoException ex ) {
             attributes.addFlashAttribute("errorMessage", ex.getMessage());
-        } catch (Exception ex) {
-            attributes.addFlashAttribute("errorMessage", "Erro ao tentar alterar a senha.");
+        }catch (Exception ex){
+            attributes.addFlashAttribute("errorMessage", "Erro ao alterar a senha.");
         }
         return "redirect:/auth/password/new";
     }
 }
+

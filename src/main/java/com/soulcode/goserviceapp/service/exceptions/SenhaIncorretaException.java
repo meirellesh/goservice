@@ -1,8 +1,10 @@
 package com.soulcode.goserviceapp.service.exceptions;
 
-public class SenhaIncorretaException  extends RuntimeException{
+
+public class SenhaIncorretaException extends RuntimeException{
     public SenhaIncorretaException() {
-        super("Senha Incorreta");
+        super("Senha incorreta.");
+
     }
 
     public SenhaIncorretaException(String message) {

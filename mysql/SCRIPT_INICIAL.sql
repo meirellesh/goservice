@@ -31,8 +31,10 @@ update usuarios set habilitado = 1 where id = 5;
 
 select * from servicos;
 
-INSERT INTO servicos (categoria, descricao, nome) 
-VALUES 
+
+INSERT INTO servicos (categoria, descricao, nome)
+VALUES
+
     ('Limpeza', 'Serviço de limpeza residencial', 'Limpeza Residencial'),
     ('Treinamento', 'Treinamento corporativo em liderança', 'Treinamento em Liderança'),
     ('Saúde', 'Consulta médica de clínico geral', 'Consulta Clínico Geral'),
@@ -45,4 +47,6 @@ VALUES
     ('Design', 'Design de interface de usuário para aplicativos', 'Design de Interface de Aplicativo');
 
 delete from servicos;
+
+
 
