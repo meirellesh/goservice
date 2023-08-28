@@ -38,6 +38,7 @@ public class PrestadorController {
             List<Servico> especialidades = servicoService.findByPrestadorEmail(authentication.getName());
             mv.addObject("especialidades", especialidades);
             List<Servico> servicos = servicoService.findAll();
+            mv.addObject("servicos", servicos);
         } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException ex) {
             mv.addObject("errorMessage", ex.getMessage());
         } catch (Exception ex) {
@@ -45,54 +46,49 @@ public class PrestadorController {
         }
         return mv;
     }
-    @PostMapping(value ="/dados")
+
+    @PostMapping(value = "/dados")
     public String editarDados(Prestador prestador, RedirectAttributes attributes) {
         try {
-             prestadorService.update(prestador);
-             attributes.addFlashAttribute("successMessage" , "Dados cadastrais alterados com sucesso");
-        } catch (UsuarioNaoEncontradoException ex){
-            attributes.addFlashAttribute("errorMessage" , ex.getMessage());
-        }     catch (Exception ex){
-             attributes.addFlashAttribute("errorMessage" , "Erro ao alterar dados cadastrais");
-    }
+            prestadorService.update(prestador);
+            attributes.addFlashAttribute("successMessage", "Dados alterados.");
+        } catch (UsuarioNaoEncontradoException ex) {
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao alterar dados cadastrais.");
+        }
         return "redirect:/prestador/dados";
     }
 
-    @PostMapping(value= "/dados/especialidade/remover")
-    public String removerEspecialidade(@RequestParam (name="servicoId") Long id,
-                                       Authentication authentication,
-                                       RedirectAttributes attributes){
+    @PostMapping(value = "/dados/especialidade/remover")
+    public String removerEspecialidade(
+            @RequestParam(name = "servicoId") Long id,
+            Authentication authentication,
+            RedirectAttributes attributes) {
         try {
             prestadorService.removeServicoPrestador(authentication, id);
-            attributes.addFlashAttribute("successMessage",
-                    "Especialidade removida com sucesso");
-        }
-        catch (UsuarioNaoEncontradoException | UsuarioNaoAutenticadoException | ServicoNaoEncontradoException ex){
+            attributes.addFlashAttribute("successMessage", "Especialidade removida");
+        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException | ServicoNaoEncontradoException ex) {
             attributes.addFlashAttribute("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao remover especialidade.");
         }
-        catch (Exception ex){
-            attributes.addFlashAttribute("errorMessage",
-                    "Erro ao remover especialidade");
-    }
         return "redirect:/prestador/dados";
     }
 
     @PostMapping(value = "/dados/especialidade/adicionar")
-    public String adicionarEspecialidade(Authentication authentication,
-                                         @RequestParam(name = "servicoId") Long id,
-                                         RedirectAttributes attributes){
-        try{
+    public String adicionarEspecialidade(
+            @RequestParam(name = "servicoId") Long id,
+            Authentication authentication,
+            RedirectAttributes attributes) {
+        try {
             prestadorService.addServicoPrestador(authentication, id);
-            attributes.addFlashAttribute("successMessage",
-                    "Especialidade adicionada com sucesso");
-        }catch(UsuarioNaoEncontradoException | UsuarioNaoAutenticadoException | ServicoNaoEncontradoException ex
-            attributes.addFlashAttribute("errorMessage",
-                    "Erro ao adicionar especialidade");
-        }catch(Exception ex){
-            attributes.addFlashAttribute("errorMessage",
-                    "Erro ao adicionar especialidade");
+            attributes.addFlashAttribute("successMessage", "Especialidade adicionada.");
+        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException | ServicoNaoEncontradoException ex) {
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao adicionar nova especialidade.");
         }
-
         return "redirect:/prestador/dados";
     }
 
@@ -100,6 +96,4 @@ public class PrestadorController {
     public String agenda() {
         return "agendaPrestador";
     }
-
-
 }
