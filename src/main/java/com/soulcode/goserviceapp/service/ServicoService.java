@@ -43,4 +43,9 @@ public class ServicoService {
         updatedServico.setCategoria(servico.getCategoria());
         return servicoRepository.save(updatedServico);
     }
+
+    public List<Servico> findByPrestadorEmail(String email){
+        return servicoRepository.findByPrestadorEmail(email);
+
+    }
 }
