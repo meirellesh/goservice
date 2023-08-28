@@ -10,3 +10,4 @@ public class UsuarioNaoEncontradoException extends RuntimeException{
         super(message);
     }
 }
+

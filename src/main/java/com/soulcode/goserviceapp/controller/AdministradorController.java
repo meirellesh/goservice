@@ -51,6 +51,7 @@ public class AdministradorController {
     public String removeService(@RequestParam(name = "servicoId") Long id, RedirectAttributes attributes) {
         try {
             servicoService.removeServicoById(id);
+
         } catch (Exception ex) {
             attributes.addFlashAttribute("errorMessage", "Erro ao excluir serviço.");
         }
@@ -82,8 +83,6 @@ public class AdministradorController {
             attributes.addFlashAttribute("errorMessage", "Erro ao atualizar serviço.");
         }
         return "redirect:/admin/servicos";
-    }
-
 
 
 

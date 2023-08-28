@@ -64,6 +64,7 @@ public class AuthController {
     ) {
         try {
             authService.updatePassword(authentication, senhaAtual, senhaNova);
+
             attributes.addFlashAttribute("successMessage", "Senha alterada com sucesso!");
         } catch (UsuarioNaoAutenticadoException | SenhaIncorretaException | UsuarioNaoEncontradoException ex ) {
             attributes.addFlashAttribute("errorMessage", ex.getMessage());
@@ -73,3 +74,4 @@ public class AuthController {
         return "redirect:/auth/password/new";
     }
 }
+
