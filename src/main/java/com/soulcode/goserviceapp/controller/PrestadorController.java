@@ -28,15 +28,15 @@ public class PrestadorController {
     @GetMapping(value = "/dados")
     public ModelAndView dados(Authentication authentication) {
         ModelAndView mv = new ModelAndView("dadosPrestador");
-        try{
-             Prestador prestador =  prestadorService.findAuthenticated(authentication);
-             mv.addObject("prestador", prestador);
-             List<Servico> especialidades = servicoService.findByPrestadorEmail(authentication.getName());
-             mv.addObject("especialidades", especialidades);
-        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException ex){
-            mv.addObject("errorMessage",ex.getMessage());
-        } catch (Exception ex){
-            mv.addObject("errorMessage","Erro ao carregar dados do prestador");
+        try {
+            Prestador prestador = prestadorService.findAuthenticated(authentication);
+            mv.addObject("prestador", prestador);
+            List<Servico> especialidades = servicoService.findByPrestadorEmail(authentication.getName());
+            mv.addObject("especialidades", especialidades);
+        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException ex) {
+            mv.addObject("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            mv.addObject("errorMessage", "Erro ao carregar dados do prestador.");
         }
         return mv;
     }
