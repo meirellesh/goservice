@@ -34,6 +34,7 @@ public class UsuarioLog {
         this.nome = usuario.getNome();
         this.email = usuario.getEmail();
         this.perfil = usuario.getPerfil().getDescricao();
+
     }
 
     public String getId() {
