@@ -7,12 +7,13 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.Min;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Prestador extends Usuario{
+public class Prestador extends Usuario implements Serializable {
     private String descricao;
 
     @Min(value = 10, message = "O valor minimo de taxa cobrada por hora é 10.")
