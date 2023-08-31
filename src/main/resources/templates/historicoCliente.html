@@ -37,12 +37,20 @@
                         <td th:text="${agendamento.hora}"></td>
                         <td th:text="${agendamento.statusAgendamento.descricao}"></td>
                         <td>
+<<<<<<< HEAD
                             <button class="btn btn-danger" style="width: 8rem" data-bs-toggle="modal" th:disabled="${not agendamento.isCancelable()}">
+=======
+                            <button class="btn btn-danger" style="width: 8rem" th:disabled="${not agendamento.isCancelable()}" data-bs-toggle="modal" th:data-bs-target="'#cancelModal' + ${agendamento.id}">
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
                                 Cancelar <i class="bi bi-x-square-fill ms-2"></i>
                             </button>
                         </td>
                         <td>
+<<<<<<< HEAD
                             <button class="btn btn-primary" style="width: 8rem" data-bs-toggle="modal" th:disabled="${not agendamento.isRealizable()}">
+=======
+                            <button class="btn btn-primary" style="width: 8rem" th:disabled="${not agendamento.isRealizable()}" data-bs-toggle="modal" th:data-bs-target="'#completeModal' + ${agendamento.id}">
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
                                 Concluir <i class="bi bi-check-square-fill ms-2"></i>
                             </button>
                         </td>
@@ -72,6 +80,29 @@
         </div>
     </div>
 
+<<<<<<< HEAD
+=======
+    <div th:each="agendamento : ${agendamentos}" th:if="${agendamento.isCancelable()}">
+        <div class="modal fade" th:id="'cancelModal' + ${agendamento?.id}" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cancelModalLabel">Confirmar Ação</h5>
+                    </div>
+                    <div class="modal-body">
+                        Tem certeza que deseja cancelar o agendamento do serviço: <strong th:text="${agendamento.servico.nome}"></strong>?
+                    </div>
+                    <form class="modal-footer" method="post" th:action="@{/cliente/historico/cancelar}">
+                        <input type="hidden" name="agendamentoId" th:value="${agendamento.id}">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                        <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
     <div th:each="agendamento : ${agendamentos}" th:if="${agendamento.isRealizable()}">
         <div class="modal fade" th:id="'completeModal' + ${agendamento?.id}" tabindex="-1" role="dialog" aria-labelledby="completeModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -91,7 +122,11 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
     <div th:replace="fragments/footer:: footer"></div>
+=======
+
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
 </div>
 
 </body>

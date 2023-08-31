@@ -14,6 +14,8 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/admin/servicos">Serviços</a></li>
                         <li><a class="dropdown-item" href="/admin/usuarios">Usuários</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/admin/dashboard">Dashboard</a></li>
                     </ul>
                 </div>
                 <!-- PRESTADOR -->
@@ -41,14 +43,21 @@
                 </div>
             </ul>
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
             <div class="text-end" th:if="${not #authorization.expression('isAuthenticated()')}">
                 <a href="/auth/login" type="button" class="btn btn-outline-primary me-3">Login</a>
                 <a href="/auth/cadastro" type="button" class="btn btn-primary">Cadastre-se</a>
             </div>
 
+<<<<<<< HEAD
             <div class="dropdown text-end" th:if="${#authorization.expression('isAuthenticated() ')}">
+=======
+            <div class="dropdown text-end" th:if="${#authorization.expression('isAuthenticated()')}">
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
                 <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
