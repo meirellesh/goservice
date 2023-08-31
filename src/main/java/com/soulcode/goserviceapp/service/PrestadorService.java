@@ -65,9 +65,16 @@ public class PrestadorService {
         prestador.removeEspecialidade(servico);
         prestadorRepository.save(prestador);
     }
+<<<<<<< HEAD
     @Cacheable(cacheNames = "redisCache")
     public List<Prestador> findByServicoId(Long id) {
         System.err.println("BUSCANDO NO BANCO DE DADOS...");
+=======
+
+    @Cacheable(cacheNames = "redisCache")
+    public List<Prestador> findByServicoId(Long id){
+        System.err.println("BUSCANDO SERVIÇOS PARA PRESTADOR NO BANCO...");
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
         return prestadorRepository.findByServicoId(id);
     }
 }

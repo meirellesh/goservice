@@ -13,7 +13,11 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "agendamentos")
+<<<<<<< HEAD
 public class Agendamento implements Serializable {
+=======
+public class Agendamento implements Serializable{
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

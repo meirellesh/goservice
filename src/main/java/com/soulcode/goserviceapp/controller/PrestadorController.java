@@ -108,6 +108,43 @@ public class PrestadorController {
             mv.addObject("errorMessage", "Erro ao carregar dados de agendamentos.");
         }
         return mv;
+<<<<<<< HEAD
+=======
+    }
+
+    @PostMapping(value = "/agenda/cancelar")
+    public String cancelarAgendamento(
+            @RequestParam(name = "agendamentoId") Long agendamentoId,
+            Authentication authentication,
+            RedirectAttributes attributes) {
+        try {
+            agendamentoService.cancelAgendaPrestador(authentication, agendamentoId);
+            attributes.addFlashAttribute("successMessage", "Agendamento cancelado.");
+        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException |
+                AgendamentoNaoEncontradoException | StatusAgendamentoImutavelException ex) {
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao cancelar agendamento.");
+        }
+        return "redirect:/prestador/agenda";
+    }
+
+    @PostMapping(value = "/agenda/confirmar")
+    public String confirmarAgendamento(
+            @RequestParam(name = "agendamentoId") Long agendamentoId,
+            Authentication authentication,
+            RedirectAttributes attributes) {
+        try {
+            agendamentoService.confirmAgenda(authentication, agendamentoId);
+            attributes.addFlashAttribute("successMessage", "Agendamento confirmado.");
+        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException |
+                 AgendamentoNaoEncontradoException | StatusAgendamentoImutavelException ex) {
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao confirmar agendamento.");
+        }
+        return "redirect:/prestador/agenda";
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
     }
 
     @PostMapping(value = "/agenda/cancelar")

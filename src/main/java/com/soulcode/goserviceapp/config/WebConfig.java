@@ -1,4 +1,8 @@
 package com.soulcode.goserviceapp.config;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

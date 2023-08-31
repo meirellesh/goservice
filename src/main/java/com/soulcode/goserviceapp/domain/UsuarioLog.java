@@ -30,11 +30,18 @@ public class UsuarioLog {
         this.perfil = perfil;
     }
 
+<<<<<<< HEAD
     public UsuarioLog(Usuario usuario) {
         this.nome = usuario.getNome();
         this.email = usuario.getEmail();
         this.perfil = usuario.getPerfil().getDescricao();
 
+=======
+    public UsuarioLog (Usuario usuario){
+        this.nome = usuario.getNome();
+        this.email = usuario.getEmail();
+        this.perfil = usuario.getPerfil().getDescricao();
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
     }
 
     public String getId() {
@@ -76,5 +83,8 @@ public class UsuarioLog {
     public void setDataLog(LocalDateTime dataLog) {
         this.dataLog = dataLog;
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
 }

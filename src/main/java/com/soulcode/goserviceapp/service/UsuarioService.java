@@ -26,7 +26,11 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+<<<<<<< HEAD
     public  Usuario findByEmail(String email){
+=======
+    public Usuario findByEmail(String email){
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
         Optional<Usuario> usuario = usuarioRepository.findByEmail(email);
         if (usuario.isPresent()){
             return usuario.get();

@@ -54,15 +54,25 @@ public class AgendamentoService {
         return agendamentoRepository.save(agendamento);
     }
     @Cacheable(cacheNames = "redisCache")
+<<<<<<< HEAD
     public List<Agendamento> findByCliente(Authentication authentication) {
         System.err.println("BUSCANDO NO BANCO DE DADOS...");
+=======
+    public List<Agendamento> findByCliente(Authentication authentication){
+        System.err.println("BUSCANDO AGENDAMENTOS CLIENTE NO BANCO...");
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
         Cliente cliente = clienteService.findAuthenticated(authentication);
         return agendamentoRepository.findByClienteEmail(cliente.getEmail());
     }
 
     @Cacheable(cacheNames = "redisCache")
+<<<<<<< HEAD
     public List<Agendamento> findByPrestador(Authentication authentication) {
         System.err.println("BUSCANDO NO BANCO DE DADOS...");
+=======
+    public List<Agendamento> findByPrestador(Authentication authentication){
+        System.err.println("BUSCANDO AGENDAMENTOS PRESTADOR NO BANCO...");
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
         Prestador prestador = prestadorService.findAuthenticated(authentication);
         return agendamentoRepository.findByPrestadorEmail(prestador.getEmail());
     }

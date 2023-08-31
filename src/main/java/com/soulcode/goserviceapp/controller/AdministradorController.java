@@ -139,6 +139,7 @@ public class AdministradorController {
     }
 
     @GetMapping(value = "/dashboard")
+<<<<<<< HEAD
     public ModelAndView dashboard(){
         ModelAndView mv = new ModelAndView("dashboard");
         try{
@@ -152,3 +153,16 @@ public class AdministradorController {
     }
 
 }
+=======
+    public ModelAndView dashboard() {
+        ModelAndView mv = new ModelAndView("dashboard");
+        try {
+            List<UsuarioLog> logsAuth = usuarioLogService.findAll();
+            mv.addObject("logsAuth", logsAuth);
+        } catch (Exception ex) {
+            mv.addObject("errorMessage", "Erro ao buscar dados de log de autenticação.");
+        }
+        return mv;
+    }
+}
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5

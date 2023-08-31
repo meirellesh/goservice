@@ -16,7 +16,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
+<<<<<<< HEAD
     private final String[] PUBLIC_ROUTES = {"/", "/home", "/auth/**", "/css/**", "/js/**", "/assets/**","/api/**"};
+=======
+    private final String[] PUBLIC_ROUTES = {"/", "/home", "/auth/**", "/css/**", "/js/**", "/assets/**", "/api/**"};
+>>>>>>> 4fd336c9acba17650f0de7db8936f954fa0495f5
 
     @Bean
     public PasswordEncoder passwordEncoder() {
