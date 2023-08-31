@@ -1,1 +1,0 @@
-alert("Oi, eu sou um script!");
