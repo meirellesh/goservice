@@ -31,7 +31,13 @@
                     </thead>
                     <tbody>
                     <tr th:each="agendamento : ${agendamentos}">
-                        <td th:text="${agendamento.prestador.nome}"></td>
+                        <td>
+                            <a class="prestador-name"
+                                  data-bs-toggle="modal"
+                                  th:data-bs-target="'#prestadorModal' + ${agendamento.id}">
+                                <span th:text="${agendamento.prestador.nome}"></span>
+                            </a>
+                        </td>
                         <td th:text="${agendamento.servico.nome}"></td>
                         <td th:text="${agendamento.data}"></td>
                         <td th:text="${agendamento.hora}"></td>
@@ -49,6 +55,43 @@
                     </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <div th:each="agendamento : ${agendamentos}">
+        <div class="modal fade" th:id="'prestadorModal' + ${agendamento.id}" tabindex="-1" role="dialog" aria-labelledby="prestadorModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="prestadorModalLabel">Detalhes do Prestador</h5>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Descrição</th>
+                                <th>Taxa de Cobrança</th>
+                                <th>Endereço</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td th:text="${agendamento.prestador.nome}"></td>
+                                <td th:text="${agendamento.prestador.email}"></td>
+                                <td th:text="${agendamento.prestador.descricao}"></td>
+                                <td th:text="${agendamento.prestador.taxaPorHora}"></td>
+                                <td th:text="${agendamento.prestador.endereco}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <input type="hidden" name="agendamentoId" th:value="${agendamento.id}">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                </div>
             </div>
         </div>
     </div>
