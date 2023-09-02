@@ -9,6 +9,9 @@ import com.soulcode.goserviceapp.service.UsuarioService;
 import com.soulcode.goserviceapp.service.exceptions.ServicoNaoEncontradoException;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -91,11 +94,18 @@ public class AdministradorController {
     }
 
     @GetMapping(value = "/usuarios")
-    public ModelAndView usuarios() {
+    public ModelAndView usuarios(@RequestParam(name = "page", defaultValue = "1") int page) {
         ModelAndView mv = new ModelAndView("usuariosAdmin");
         try {
-            List<Usuario> usuarios = usuarioService.findAll();
+            int pageSize = 10;
+            Pageable pageable = PageRequest.of(page - 1, pageSize);
+            Page<Usuario> usuariosPage = usuarioService.findUsersByPage(pageable);
+            List<Usuario> usuarios = usuariosPage.getContent();
+            long totalUsuarios = usuariosPage.getTotalElements();
+            int totalPages = usuariosPage.getTotalPages();
             mv.addObject("usuarios", usuarios);
+            mv.addObject("currentPage", page);
+            mv.addObject("totalPages", totalPages);
         } catch (Exception ex) {
             mv.addObject("errorMessage", "Erro ao buscar dados de usuários.");
         }
