@@ -32,8 +32,8 @@
                     <tbody>
                     <tr th:each="agendamento : ${agendamentos}">
                         <td>
-                            <a data-bs-toggle="modal" th:data-bs-target="'#prestadorModal' + ${agendamento.id}">
-                                <span th:text="${agendamento.prestador.nome}"></span>
+                            <a href="#" data-bs-toggle="modal" th:data-bs-target="'#testeModal' + ${agendamento.id}">
+                                <span th:text="${agendamento.prestador.descricao}"></span>
                             </a>
                         </td>
                         <td th:text="${agendamento.servico.nome}"></td>
@@ -58,35 +58,18 @@
     </div>
 
     <div th:each="agendamento : ${agendamentos}">
-        <div class="modal fade" th:id="'prestadorModal' + ${agendamento?.id}" tabindex="-1" role="dialog" aria-labelledby="prestadorModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal fade" th:id="'testeModal' + ${agendamento?.id}" tabindex="-1" role="dialog" aria-labelledby="testeModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="prestadorModalLabel">Detalhes do Prestador</h5>
+                        <h5 class="modal-title" id="testeModalLabel">Detalhes do Prestador</h5>
                     </div>
                     <div class="modal-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>E-mail</th>
-                                    <th>Descrição</th>
-                                    <th>Taxa de Cobrança</th>
-                                    <th>Endereço</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td th:text="${agendamento.prestador.nome}"></td>
-                                    <td th:text="${agendamento.prestador.email}"></td>
-                                    <td th:text="${agendamento.prestador.descricao}"></td>
-                                    <td th:text="${agendamento.prestador.taxaPorHora}"></td>
-                                    <td th:text="${agendamento.prestador.endereco}"></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <strong th:text="${agendamento.servico.nome}"></strong>
                     </div>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                    </div>
                 </div>
             </div>
         </div>
