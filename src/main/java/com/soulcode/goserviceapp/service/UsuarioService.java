@@ -8,6 +8,8 @@ import com.soulcode.goserviceapp.repository.UsuarioRepository;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -95,5 +97,14 @@ public class UsuarioService {
             return;
         }
         throw new UsuarioNaoEncontradoException();
+    }
+
+    public Page<Usuario> findUsersByPage(Pageable pageable) {
+        return usuarioRepository.findAll(pageable);
+    }
+
+
+    public long countUsers() {
+        return usuarioRepository.count();
     }
 }
