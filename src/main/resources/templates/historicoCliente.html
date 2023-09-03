@@ -32,8 +32,8 @@
                     <tbody>
                     <tr th:each="agendamento : ${agendamentos}">
                         <td>
-                            <a href="#" data-bs-toggle="modal" th:data-bs-target="'#testeModal' + ${agendamento.id}">
-                                <span th:text="${agendamento.prestador.descricao}"></span>
+                            <a href="#" data-bs-toggle="modal" th:data-bs-target="'#prestadorModal' + ${agendamento.id}">
+                                <span th:text="${agendamento.prestador.nome}"></span>
                             </a>
                         </td>
                         <td th:text="${agendamento.servico.nome}"></td>
@@ -58,14 +58,32 @@
     </div>
 
     <div th:each="agendamento : ${agendamentos}">
-        <div class="modal fade" th:id="'testeModal' + ${agendamento?.id}" tabindex="-1" role="dialog" aria-labelledby="testeModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+        <div class="modal fade" th:id="'prestadorModal' + ${agendamento?.id}" tabindex="-1" role="dialog" aria-labelledby="prestadorModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="testeModalLabel">Detalhes do Prestador</h5>
                     </div>
                     <div class="modal-body">
-                        <strong th:text="${agendamento.servico.nome}"></strong>
+                        <table class="table w-100">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>Descrição</th>
+                                    <th>Taxa de Cobrança</th>
+                                    <th>Endereço</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td th:text="${#strings.defaultString(agendamento.prestador.nome, 'Não informado')}"></td>
+                                    <td th:text="${#strings.defaultString(agendamento.prestador.email, 'Não informado')}"></td>
+                                    <td th:text="${#strings.defaultString(agendamento.prestador.descricao, 'Não informado')}"></td>
+                                    <td th:text="${#strings.defaultString(agendamento.prestador.taxaPorHora, 'Não informado')}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
