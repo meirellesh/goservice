@@ -31,7 +31,11 @@
                     </thead>
                     <tbody>
                     <tr th:each="agendamento : ${agendamentos}">
-                        <td th:text="${agendamento.cliente.nome}"></td>
+                        <td>
+                            <a href="#" data-bs-toggle="modal" th:data-bs-target="'#clienteModal' + ${agendamento.id}">
+                                <span th:text="${agendamento.cliente.nome}"></span>
+                            </a>
+                        </td>
                         <td th:text="${agendamento.servico.nome}"></td>
                         <td th:text="${agendamento.data}"></td>
                         <td th:text="${agendamento.hora}"></td>
@@ -52,6 +56,43 @@
             </div>
         </div>
     </div>
+
+<div th:each="agendamento : ${agendamentos}">
+    <div class="modal fade" th:id="'clienteModal' + ${agendamento?.id}" tabindex="-1" role="dialog" aria-labelledby="clienteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clienteModalLabel">Detalhes do Cliente</h5>
+                </div>
+                <div class="modal-body">
+                    <table class="table w-100">
+                        <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Telefone</th>
+                            <th>Data de Nascimento</th>
+                            <th>Endereço</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${#strings.defaultString(agendamento.cliente.nome, 'Não informado')}"></td>
+                            <td th:text="${#strings.defaultString(agendamento.cliente.email, 'Não informado')}"></td>
+                            <td th:text="${#strings.defaultString(agendamento.cliente.telefone, 'Não informado')}"></td>
+                            <td th:text="${#strings.defaultString(agendamento.cliente.dataNascimento, 'Não informado')}"></td>
+                            <td th:text="${#strings.defaultString(agendamento.cliente.endereco, 'Não informado')}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <div th:each="agendamento : ${agendamentos}" th:if="${agendamento.isCancelable()}">
         <div class="modal fade" th:id="'cancelModal' + ${agendamento?.id}" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
