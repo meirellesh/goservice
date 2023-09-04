@@ -37,7 +37,7 @@ body{
  }
 
 .content-wrap {
-  padding-bottom: 300px;
+  padding-bottom: 30px;
 }
 
 #footer {
@@ -65,4 +65,21 @@ body{
     border-radius: 5px;
     max-width: 400px;
     margin-top: 40px;
+}
+
+.container-carousel {
+width: 50%;
+height: 50%;
+display: flex;
+margin-left: 24%;
+margin-bottom: 20px;
+
+}
+
+.carousel-control-prev {
+left: 18%;
+}
+
+.carousel-control-next {
+    right: 20%;
 }
