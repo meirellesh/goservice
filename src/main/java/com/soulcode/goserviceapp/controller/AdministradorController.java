@@ -33,13 +33,20 @@ public class AdministradorController {
     private UsuarioLogService usuarioLogService;
 
     @GetMapping(value = "/servicos")
-    public ModelAndView servicos() {
+    public ModelAndView servico(@RequestParam(name = "page", defaultValue = "1") int page){
         ModelAndView mv = new ModelAndView("servicosAdmin");
-        try {
-            List<Servico> servicos = servicoService.findAll();
+        try{
+            int pageSize = 10;
+            Pageable pageable = PageRequest.of(page - 1, pageSize);
+            Page<Servico> servicosPage = servicoService.findServicoByPage(pageable);
+            List<Servico> servicos = servicosPage.getContent();
+            long totalServicos = servicosPage.getTotalElements();
+            int totalPages = servicosPage.getTotalPages();
             mv.addObject("servicos", servicos);
-        } catch (Exception ex) {
-            mv.addObject("errorMessage", "Erro ao buscar dados de serviços.");
+            mv.addObject("currentPage", page);
+            mv.addObject("totalPages", totalPages);
+        }   catch (ServicoNaoEncontradoException ex) {
+            mv.addObject("errorMessage", "Erro ao encontrar dados de serviço.");
         }
         return mv;
     }

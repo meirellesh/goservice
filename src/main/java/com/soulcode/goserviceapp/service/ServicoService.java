@@ -43,6 +43,14 @@ public class ServicoService {
         }
     }
 
+    public Page<Servico> findServicoByPage(Pageable pageable) {
+        return servicoRepository.findAll(pageable);
+    }
+
+    public long countServicos(){
+        return servicoRepository.count();
+    }
+
     public Servico update(Servico servico){
         Servico updatedServico = this.findById(servico.getId());
         updatedServico.setNome(servico.getNome());
