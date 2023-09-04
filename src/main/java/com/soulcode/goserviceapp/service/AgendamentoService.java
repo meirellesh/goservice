@@ -1,11 +1,9 @@
 package com.soulcode.goserviceapp.service;
 
-import com.soulcode.goserviceapp.domain.Agendamento;
-import com.soulcode.goserviceapp.domain.Cliente;
-import com.soulcode.goserviceapp.domain.Prestador;
-import com.soulcode.goserviceapp.domain.Servico;
+import com.soulcode.goserviceapp.domain.*;
 import com.soulcode.goserviceapp.domain.enums.StatusAgendamento;
 import com.soulcode.goserviceapp.repository.AgendamentoRepository;
+import com.soulcode.goserviceapp.repository.AppointmentLogRepository;
 import com.soulcode.goserviceapp.service.exceptions.AgendamentoNaoEncontradoException;
 import com.soulcode.goserviceapp.service.exceptions.StatusAgendamentoImutavelException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +25,9 @@ public class AgendamentoService {
 
     @Autowired
     private  ServicoService servicoService;
+
+    @Autowired
+    private AppointmentLogRepository appointmentLogRepository;
 
     @Autowired
     private ClienteService clienteService;
@@ -109,5 +112,34 @@ public class AgendamentoService {
             return;
         }
         throw new StatusAgendamentoImutavelException();
+    }
+
+    public void cancelarAgendamentoPeloPrestador(Authentication authentication, Long id) {
+        Prestador prestador = prestadorService.findAuthenticated(authentication);
+        Agendamento agendamento = findById(id);
+        if (agendamento.getStatusAgendamento().equals(StatusAgendamento.AGUARDANDO_CONFIRMACAO)) {
+            agendamento.setStatusAgendamento(StatusAgendamento.CANCELADO_PELO_PRESTADOR);
+            agendamentoRepository.save(agendamento);
+
+            criarEntradaDeMudancaDeStatus(agendamento.getId(), StatusAgendamento.AGUARDANDO_CONFIRMACAO, StatusAgendamento.CANCELADO_PELO_PRESTADOR);
+
+            return;
+        }
+        throw new StatusAgendamentoImutavelException();
+    }
+
+    private void criarEntradaDeMudancaDeStatus(Long idDoAgendamento, StatusAgendamento statusAnterior, StatusAgendamento novoStatus) {
+        AppointmentLog logDeAgendamento = new AppointmentLog();
+        logDeAgendamento.setIdDoAgendamento(idDoAgendamento);
+        logDeAgendamento.setDataHoraRegistro(LocalDateTime.now());
+
+        MudancaDeStatus mudancaDeStatus = new MudancaDeStatus();
+        mudancaDeStatus.setStatusAnterior(statusAnterior);
+        mudancaDeStatus.setNovoStatus(novoStatus);
+        mudancaDeStatus.setDataHoraRegistro(LocalDateTime.now());
+
+        logDeAgendamento.setMudancasDeStatus(Collections.singletonList(mudancaDeStatus));
+
+        appointmentLogRepository.save(logDeAgendamento);
     }
 }
