@@ -8,6 +8,8 @@ import com.soulcode.goserviceapp.service.exceptions.AgendamentoNaoEncontradoExce
 import com.soulcode.goserviceapp.service.exceptions.StatusAgendamentoImutavelException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -57,17 +59,23 @@ public class AgendamentoService {
         return agendamentoRepository.save(agendamento);
     }
     @Cacheable(cacheNames = "redisCache")
-    public List<Agendamento> findByCliente(Authentication authentication){
+    public List<Agendamento> findByCliente(Authentication authentication, int page){
         System.err.println("BUSCANDO AGENDAMENTOS CLIENTE NO BANCO...");
         Cliente cliente = clienteService.findAuthenticated(authentication);
-        return agendamentoRepository.findByClienteEmail(cliente.getEmail());
+        int offset = page * 10;
+        return agendamentoRepository.findByClienteEmail(cliente.getEmail(), offset);
     }
 
     @Cacheable(cacheNames = "redisCache")
-    public List<Agendamento> findByPrestador(Authentication authentication){
+    public List<Agendamento> findByPrestador(Authentication authentication, int page){
         System.err.println("BUSCANDO AGENDAMENTOS PRESTADOR NO BANCO...");
         Prestador prestador = prestadorService.findAuthenticated(authentication);
-        return  agendamentoRepository.findByPrestadorEmail(prestador.getEmail());
+        int offset = page * 10;
+        return  agendamentoRepository.findByPrestadorEmail(prestador.getEmail(), offset);
+    }
+
+    public Page<Agendamento> findAgendamentoByPage(Pageable pageable) {
+        return agendamentoRepository.findAll(pageable);
     }
 
     public void cancelAgendaPrestador(Authentication authentication, Long id){

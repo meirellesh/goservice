@@ -15,9 +15,9 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Long> 
             "GROUP BY status_agendamento;", nativeQuery = true)
     void agendamentoByStatus();
 
-    @Query(value="SELECT a.* FROM agendamentos a JOIN usuarios u ON a.cliente_id = u.id WHERE u.email = ? ORDER BY data", nativeQuery = true)
-    List<Agendamento> findByClienteEmail(String email);
+    @Query(value = "SELECT a.* FROM agendamentos a JOIN usuarios u ON a.cliente_id = u.id WHERE u.email = ?1 ORDER BY data LIMIT ?2, 10", nativeQuery = true)
+    List<Agendamento> findByClienteEmail(String email, int offset);
 
-    @Query(value = "SELECT a.* FROM agendamentos a JOIN usuarios u ON a.prestador_id = u.id WHERE u.email = ? ORDER BY data", nativeQuery = true)
-    List<Agendamento> findByPrestadorEmail(String email);
+    @Query(value = "SELECT a.* FROM agendamentos a JOIN usuarios u ON a.prestador_id = u.id WHERE u.email = ?1 ORDER BY data LIMIT ?2, 10", nativeQuery = true)
+    List<Agendamento> findByPrestadorEmail(String email, int offset);
 }
