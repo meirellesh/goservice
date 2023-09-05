@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -178,5 +179,18 @@ public class AdministradorController {
             mv.addObject("errorMessage", "Erro ao buscar dados de log de autenticação.");
         }
         return mv;
+    }
+
+    @GetMapping
+    public String listarServicos(Model model, @RequestParam(name = "filtroNome", required = false) String filtroNome) {
+        List<Servico> servicos;
+
+        if (filtroNome != null && !filtroNome.isEmpty()) {
+            servicos = servicoService.findByNomeContaining(filtroNome);
+        } else {
+            servicos = servicoService.findAll();
+        }
+        model.addAttribute("servicos", servicos);
+        return "admin/lista-servicos";
     }
 }
