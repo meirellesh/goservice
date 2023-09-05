@@ -63,4 +63,7 @@ public class ServicoService {
         return servicoRepository.findByPrestadorEmail(email);
     }
 
+    public List<Servico> findByNomeContaining(String nome) {
+        return servicoRepository.findByNomeContaining(nome);
+    }
 }

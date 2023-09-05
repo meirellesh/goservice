@@ -52,9 +52,15 @@
 
         <div class="card w-100 mt-5">
             <div class="card-body">
-                <h5 class="card-title mb-2">Serviços cadastrados</h5>
-
-                <table class="table w-100">
+                <h5 class="card-title mb-2">Filtrar Serviços</h5>
+                <form method="get" th:action="@{/admin/servicos}">
+                    <div class="mb-3">
+                        <label for="filtroNome" class="form-label">Nome do Serviço</label>
+                        <input type="text" class="form-control" id="filtroNome" name="filtroNome">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Filtrar <i class="bi bi-search ms-2"></i></button>
+                </form>
+                <table class="table w-100" id="servicosTable">
                     <thead>
                     <tr>
                         <th>Nome</th>
