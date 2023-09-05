@@ -50,6 +50,10 @@ public class UsuarioService {
         throw new UsuarioNaoEncontradoException();
     }
 
+    public Page<Usuario> findUsersByNameWithPage(String nome, Pageable pageable) {
+        return usuarioRepository.findByNome(nome, pageable);
+    }
+
     public Usuario createUser(Usuario usuario){
         String passwordEncoded = encoder.encode(usuario.getSenha());
         usuario.setSenha(passwordEncoded);
