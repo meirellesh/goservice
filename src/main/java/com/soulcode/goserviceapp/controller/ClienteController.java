@@ -92,11 +92,15 @@ public class ClienteController {
             Authentication authentication,
             RedirectAttributes attributes) {
         try {
+            Prestador prestador = prestadorService.findById(prestadorId);
+            if (!agendamentoService.isHorarioLivre(prestador, data, hora)) {
+                throw new HorarioIndisponivelException("O Prestador já possui um agendamento nesse horario.");
+            }
             agendamentoService.create(authentication, servicoId, prestadorId, data, hora);
             attributes.addFlashAttribute("successMessage", "Agendamento realizado com sucesso. Aguardando confirmação.");
-        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException | ServicoNaoEncontradoException ex) {
+        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException | ServicoNaoEncontradoException | HorarioIndisponivelException ex){
             attributes.addFlashAttribute("errorMessage", ex.getMessage());
-        } catch (Exception ex) {
+        }catch (Exception ex) {
             attributes.addFlashAttribute("errorMessage", "Erro ao finalizar agendamento.");
         }
         return "redirect:/cliente/historico";
