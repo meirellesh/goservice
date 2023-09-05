@@ -101,21 +101,35 @@ public class AdministradorController {
     }
 
     @GetMapping(value = "/usuarios")
-    public ModelAndView usuarios(@RequestParam(name = "page", defaultValue = "1") int page) {
+    public ModelAndView usuarios(
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "filtro", required = false) String filtro) {
         ModelAndView mv = new ModelAndView("usuariosAdmin");
+
         try {
             int pageSize = 10;
             Pageable pageable = PageRequest.of(page - 1, pageSize);
-            Page<Usuario> usuariosPage = usuarioService.findUsersByPage(pageable);
+            Page<Usuario> usuariosPage;
+
+            if (filtro != null && !filtro.isEmpty()) {
+                usuariosPage = usuarioService.findUsersByNameWithPage(filtro, pageable);
+            } else {
+                usuariosPage = usuarioService.findUsersByPage(pageable);
+            }
+
             List<Usuario> usuarios = usuariosPage.getContent();
             long totalUsuarios = usuariosPage.getTotalElements();
             int totalPages = usuariosPage.getTotalPages();
+
             mv.addObject("usuarios", usuarios);
             mv.addObject("currentPage", page);
             mv.addObject("totalPages", totalPages);
+            mv.addObject("filtro", filtro);
+
         } catch (Exception ex) {
             mv.addObject("errorMessage", "Erro ao buscar dados de usuários.");
         }
+
         return mv;
     }
 

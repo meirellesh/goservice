@@ -1,6 +1,8 @@
 package com.soulcode.goserviceapp.repository;
 
 import com.soulcode.goserviceapp.domain.Usuario;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,6 +14,8 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByEmail(String email);
+
+    Page<Usuario> findByNome(String nome, Pageable pageable);
 
     @Query(value = "SELECT perfil,  COUNT(*) AS quantidade_de_usuarios" +
             "FROM usuarios" +

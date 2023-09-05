@@ -54,6 +54,15 @@
             <div class="card-body">
                 <h5 class="card-title mb-2">Usuários cadastrados</h5>
 
+                <form method="get" th:action="@{/admin/usuarios}">
+                    <div class="mb-3">
+                        <label for="filtro" class="form-label">Filtrar por nome</label>
+                        <input type="text" class="form-control" id="filtro" name="filtro" placeholder="Digite um nome para busca" th:value="${filtro}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary mt-1 me-2 mb-3 mt-2">Filtrar</button>
+                    <a class="btn btn-outline-danger mt-1 mb-3 mt-2" href="/admin/usuarios">Limpar</a>
+                </form>
+
                 <table class="table w-100">
                     <thead>
                     <tr>
