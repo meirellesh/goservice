@@ -10,6 +10,9 @@ import com.soulcode.goserviceapp.service.PrestadorService;
 import com.soulcode.goserviceapp.service.ServicoService;
 import com.soulcode.goserviceapp.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -107,11 +110,18 @@ public class ClienteController {
     }
 
     @GetMapping(value = "/historico")
-    public ModelAndView historico(Authentication authentication) {
+    public ModelAndView  historico(Authentication authentication, @RequestParam(name = "page", defaultValue = "0") int page) {
         ModelAndView mv = new ModelAndView("historicoCliente");
         try {
-            List<Agendamento> agendamentos = agendamentoService.findByCliente(authentication);
+            int pageSize = 10;
+            Pageable pageable = PageRequest.of(page, pageSize);
+            Page<Agendamento> agendamentosPage = agendamentoService.findAgendamentoByPage(pageable);
+            List<Agendamento> agendamentos = agendamentosPage.getContent();
+            long totalAgendamentos = agendamentosPage.getTotalElements();
+            int totalPages = agendamentosPage.getTotalPages();
             mv.addObject("agendamentos", agendamentos);
+            mv.addObject("currentPage", page);
+            mv.addObject("totalPages", totalPages);
         } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException ex) {
             mv.addObject("errorMessage", ex.getMessage());
         } catch (Exception ex) {
@@ -119,6 +129,7 @@ public class ClienteController {
         }
         return mv;
     }
+
 
     @PostMapping(value = "/historico/cancelar")
     public String cancelarAgendamento(

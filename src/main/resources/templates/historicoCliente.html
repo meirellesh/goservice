@@ -53,6 +53,33 @@
                     </tr>
                     </tbody>
                 </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item" th:if="${currentPage > 1}">
+                            <a class="page-link" th:href="@{/cliente/historico(page=1)}" aria-label="Primeira página">
+                                <span aria-hidden="true">&laquo;&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:if="${currentPage > 1}">
+                            <a class="page-link" th:href="@{/cliente/historico(page=${currentPage - 1})}" aria-label="Página anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:each="page,stat : ${totalPages}" th:class="${page == currentPage} ? 'active' : ''">
+                            <a class="page-link" th:href="@{/cliente/historico(page=${page})}" th:text="${page}"></a>
+                        </li>
+                        <li class="page-item" th:if="${currentPage < totalPages}">
+                            <a class="page-link" th:href="@{/cliente/historico(page=${currentPage + 1})}" aria-label="Próxima página">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item" th:if="${currentPage < totalPages}">
+                            <a class="page-link" th:href="@{/cliente/historico(page=${totalPages})}" aria-label="Última página">
+                                <span aria-hidden="true">&raquo;&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>
