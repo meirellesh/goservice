@@ -1,9 +1,8 @@
 package com.soulcode.goserviceapp.controller;
 
-import com.soulcode.goserviceapp.domain.Agendamento;
-import com.soulcode.goserviceapp.domain.Prestador;
-import com.soulcode.goserviceapp.domain.Servico;
+import com.soulcode.goserviceapp.domain.*;
 import com.soulcode.goserviceapp.service.AgendamentoService;
+import com.soulcode.goserviceapp.service.EnderecoService;
 import com.soulcode.goserviceapp.service.PrestadorService;
 import com.soulcode.goserviceapp.service.ServicoService;
 import com.soulcode.goserviceapp.service.exceptions.*;
@@ -28,6 +27,9 @@ import java.util.List;
 public class PrestadorController {
 
     @Autowired
+    private EnderecoService enderecoService;
+
+    @Autowired
     private PrestadorService prestadorService;
 
     @Autowired
@@ -42,6 +44,7 @@ public class PrestadorController {
         try {
             Prestador prestador = prestadorService.findAuthenticated(authentication);
             mv.addObject("prestador", prestador);
+            mv.addObject("endereco", prestador.getEndereco());
             List<Servico> especialidades = servicoService.findByPrestadorEmail(authentication.getName());
             mv.addObject("especialidades", especialidades);
             List<Servico> servicos = servicoService.findAll();
@@ -55,7 +58,9 @@ public class PrestadorController {
     }
 
     @PostMapping(value = "/dados")
-    public String editarDados(Prestador prestador, RedirectAttributes attributes) {
+    public String alterarDados(
+            Prestador prestador,
+            RedirectAttributes attributes) {
         try {
             prestadorService.update(prestador);
             attributes.addFlashAttribute("successMessage", "Dados alterados.");
@@ -63,6 +68,21 @@ public class PrestadorController {
             attributes.addFlashAttribute("errorMessage", ex.getMessage());
         } catch (Exception ex) {
             attributes.addFlashAttribute("errorMessage", "Erro ao alterar dados cadastrais.");
+        }
+        return "redirect:/prestador/dados";
+    }
+
+    @PostMapping(value = "/dados/endereco")
+    public String alterarEndereco(
+            Endereco endereco,
+            RedirectAttributes attributes) {
+        try {
+            enderecoService.updateEndereco(endereco);
+            attributes.addFlashAttribute("successMessage", "Dados de endereço alterados.");
+        } catch (UsuarioNaoEncontradoException ex) {
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao alterar dados de endereço.");
         }
         return "redirect:/prestador/dados";
     }

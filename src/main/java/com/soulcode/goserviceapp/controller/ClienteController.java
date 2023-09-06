@@ -1,13 +1,8 @@
 package com.soulcode.goserviceapp.controller;
 
-import com.soulcode.goserviceapp.domain.Agendamento;
-import com.soulcode.goserviceapp.domain.Cliente;
-import com.soulcode.goserviceapp.domain.Prestador;
-import com.soulcode.goserviceapp.domain.Servico;
-import com.soulcode.goserviceapp.service.AgendamentoService;
-import com.soulcode.goserviceapp.service.ClienteService;
-import com.soulcode.goserviceapp.service.PrestadorService;
-import com.soulcode.goserviceapp.service.ServicoService;
+import com.soulcode.goserviceapp.domain.*;
+import com.soulcode.goserviceapp.repository.EnderecoRepository;
+import com.soulcode.goserviceapp.service.*;
 import com.soulcode.goserviceapp.service.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,6 +26,12 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @Autowired
+    private EnderecoService enderecoService;
+
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
+    @Autowired
     private ServicoService servicoService;
 
     @Autowired
@@ -45,6 +46,8 @@ public class ClienteController {
         try {
             Cliente cliente = clienteService.findAuthenticated(authentication);
             mv.addObject("cliente", cliente);
+            mv.addObject("endereco", cliente.getEndereco());
+            System.err.println(cliente.getEndereco());
         } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException ex) {
             mv.addObject("errorMessage", ex.getMessage());
         } catch (Exception ex) {
@@ -54,9 +57,26 @@ public class ClienteController {
     }
 
     @PostMapping(value = "/dados")
-    public String alterarDados(Cliente cliente, RedirectAttributes attributes) {
+    public String alterarDados(
+            Cliente cliente,
+            RedirectAttributes attributes) {
         try {
             clienteService.update(cliente);
+            attributes.addFlashAttribute("successMessage", "Dados alterados.");
+        } catch (UsuarioNaoEncontradoException ex) {
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao alterar dados cadastrais.");
+        }
+        return "redirect:/cliente/dados";
+    }
+
+    @PostMapping(value = "/dados/endereco")
+    public String alterarEndereco(
+            Endereco endereco,
+            RedirectAttributes attributes) {
+        try {
+            enderecoService.updateEndereco(endereco);
             attributes.addFlashAttribute("successMessage", "Dados alterados.");
         } catch (UsuarioNaoEncontradoException ex) {
             attributes.addFlashAttribute("errorMessage", ex.getMessage());
@@ -72,7 +92,7 @@ public class ClienteController {
         try {
             List<Servico> servicos = servicoService.findAll();
             mv.addObject("servicos", servicos);
-            if(servicoId != null) {
+            if (servicoId != null) {
                 List<Prestador> prestadores = prestadorService.findByServicoId(servicoId);
                 mv.addObject("prestadores", prestadores);
                 mv.addObject("servicoId", servicoId);
@@ -107,7 +127,7 @@ public class ClienteController {
     }
 
     @GetMapping(value = "/historico")
-    public ModelAndView  historico(Authentication authentication, @RequestParam(name = "page", defaultValue = "0") int page) {
+    public ModelAndView historico(Authentication authentication, @RequestParam(name = "page", defaultValue = "0") int page) {
         ModelAndView mv = new ModelAndView("historicoCliente");
         try {
             int pageSize = 10;

@@ -1,31 +1,75 @@
 package com.soulcode.goserviceapp.domain;
 
-import com.soulcode.goserviceapp.domain.enums.Perfil;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Endereco extends Usuario{
+@Table(name = "enderecos")
+public class Endereco implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(length = 150)
+    private String rua;
 
     @Column(length = 100)
-    private String logradouro;
-
-    @Column
-    private String numero;
-
-    @Column(length = 100)
-    private String cidade;
-
-    @Column(length = 2)
     private String uf;
 
-    public Endereco(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, String logradouro, String numero, String cidade, String uf) {
-        super(id, nome, email, senha, perfil, habilitado);
+    @Column(length = 150)
+    private String cidade;
+
+    @Column(length = 150)
+    private String logradouro;
+
+    @Column(length = 10)
+    private String numero;
+
+    public Endereco() {
+    }
+
+    public Endereco(Long id, String rua, String uf, String cidade, String logradouro, String numero) {
+        this.id = id;
+        this.rua = rua;
+        this.uf = uf;
+        this.cidade = cidade;
         this.logradouro = logradouro;
         this.numero = numero;
-        this.cidade = cidade;
+    }
+
+    public String getRua() {
+        return rua;
+    }
+
+    public void setRua(String rua) {
+        this.rua = rua;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public void setUf(String uf) {
         this.uf = uf;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public String getLogradouro() {
@@ -44,36 +88,4 @@ public class Endereco extends Usuario{
         this.numero = numero;
     }
 
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getUf() {
-        return uf;
-    }
-
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Endereco endereco = (Endereco) o;
-        return  Objects.equals(logradouro, endereco.logradouro) &&
-                Objects.equals(cidade, endereco.cidade) &&
-                Objects.equals(numero, endereco.numero) &&
-                Objects.equals(uf, endereco.uf);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), getLogradouro(), getNumero(), getCidade(), getUf());
-    }
 }
-

@@ -49,6 +49,7 @@ public class PrestadorService {
         updatedPrestador.setDescricao(prestador.getDescricao());
         updatedPrestador.setTaxaPorHora(prestador.getTaxaPorHora());
         updatedPrestador.setFotoUsuario(prestador.getFotoUsuario());
+        updatedPrestador.setEndereco(prestador.getEndereco());
         return prestadorRepository.save(updatedPrestador);
     }
 
