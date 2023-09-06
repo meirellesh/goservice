@@ -101,6 +101,11 @@ margin: 10px 10px 10px 0;
     margin-left: 10px;
 
 }
+.btn{
+margin-left: 20px;
+margin-top: 10px;
+}
+
 
 .custom-loader {
   width: 50px;

@@ -1,17 +1,21 @@
 package com.soulcode.goserviceapp.controller;
 
+import com.soulcode.goserviceapp.domain.Administrador;
 import com.soulcode.goserviceapp.domain.Servico;
 import com.soulcode.goserviceapp.domain.Usuario;
 import com.soulcode.goserviceapp.domain.UsuarioLog;
+import com.soulcode.goserviceapp.service.AdminService;
 import com.soulcode.goserviceapp.service.ServicoService;
 import com.soulcode.goserviceapp.service.UsuarioLogService;
 import com.soulcode.goserviceapp.service.UsuarioService;
 import com.soulcode.goserviceapp.service.exceptions.ServicoNaoEncontradoException;
+import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoAutenticadoException;
 import com.soulcode.goserviceapp.service.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +36,9 @@ public class AdministradorController {
 
     @Autowired
     private UsuarioLogService usuarioLogService;
+
+    @Autowired
+    private AdminService adminService;
 
     @GetMapping(value = "/servicos")
     public ModelAndView servico(@RequestParam(name = "page", defaultValue = "1") int page){
@@ -180,17 +187,43 @@ public class AdministradorController {
         }
         return mv;
     }
-
-    @GetMapping
-    public String listarServicos(Model model, @RequestParam(name = "filtroNome", required = false) String filtroNome) {
-        List<Servico> servicos;
-
-        if (filtroNome != null && !filtroNome.isEmpty()) {
-            servicos = servicoService.findByNomeContaining(filtroNome);
-        } else {
-            servicos = servicoService.findAll();
+    @GetMapping(value = "/dados")
+    public ModelAndView dados(Authentication authentication) {
+        ModelAndView mv = new ModelAndView("dadosAdministrador");
+        try {
+            Administrador admin = adminService.findAuthenticated(authentication);
+            mv.addObject("administrador", admin);
+        } catch (UsuarioNaoAutenticadoException | UsuarioNaoEncontradoException ex) {
+            mv.addObject("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            mv.addObject("errorMessage", "Erro ao buscar dados do Administrador.");
         }
-        model.addAttribute("servicos", servicos);
-        return "admin/lista-servicos";
+        return mv;
     }
+
+    @PostMapping(value = "/dados")
+    public String alterarDados(Administrador administrador, RedirectAttributes attributes) {
+        try {
+            adminService.update(administrador);
+            attributes.addFlashAttribute("successMessage", "Dados alterados.");
+        } catch (UsuarioNaoEncontradoException ex) {
+            attributes.addFlashAttribute("errorMessage", ex.getMessage());
+        } catch (Exception ex) {
+            attributes.addFlashAttribute("errorMessage", "Erro ao alterar dados cadastrais.");
+        }
+        return "redirect:/admin/dados";
+    }
+
+        @GetMapping
+        public String listarServicos(Model model, @RequestParam(name = "filtroNome", required = false) String filtroNome) {
+            List<Servico> servicos;
+
+            if (filtroNome != null && !filtroNome.isEmpty()) {
+                servicos = servicoService.findByNomeContaining(filtroNome);
+            } else {
+                servicos = servicoService.findAll();
+            }
+            model.addAttribute("servicos", servicos);
+            return "admin/lista-servicos";
+        }
 }

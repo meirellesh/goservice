@@ -1,0 +1,45 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout(~{::title}, ~{::#content})">
+<head>
+    <title>Usuários | GoService</title>
+</head>
+<body>
+
+<div id="content">
+    <div th:replace="fragments/header :: header"></div>
+    <div class="card w-100 mt-5">
+        <div class="card-body">
+            <h5 class="card-title mb-2">Alterar Dados</h5>
+
+            <div th:if="${successMessage != null}" th:text="${successMessage}" class="alert alert-success" role="alert"></div>
+            <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger" role="alert"></div>
+
+            <form method="post" th:action="@{/admin/dados}">
+
+                <input type="hidden" name="id" th:field="*{administrador.id}">
+                <input type="hidden" name="urlImagem" id="urlImagem" th:field="*{administrador.fotoUsuario}">
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="nome" name="nome" th:field="*{administrador.nome}" required>
+                    <div class="form-text"></div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-mail<span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="email" name="email" th:field="*{administrador.email}" required>
+                        <div class="form-text"></div>
+                    </div>
+                    </div>
+                <div class="imageUpload d-flex flex-row mt-4 align-items-center" >
+                    <input type="file" id="inputFoto" class="inp form-control" onchange="getImageData(event)" accept="image/jpeg, image/jpg, image/png" />
+                    <span class="filedata"></span>
+                    <div class="uploadCompleto">
+                        <div class="custom-loader" role="status">
+                        </div>
+                    </div>
+                    <button type="button" id="upload" onclick="uploadImage()" class="upload btn btn-primary my-3">Upload</button>
+                </div>
+                <button type="submit" id="salvar" class="btn btn-primary">Salvar <i class="bi bi-save2 ms-2"></i></button>
+    <div th:replace="fragments/footer:: footer"></div>
+</div>
+
+</body>
+</html>
