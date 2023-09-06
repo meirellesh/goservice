@@ -121,7 +121,9 @@ public class PrestadorController {
     }
 
     @PostMapping(value = "/agenda/pesquisa")
-    public ModelAndView searchAgenda(@RequestParam(name = "data-inicio")String dataInicio, @RequestParam(name = "data-fim")String dataFim){
+    public ModelAndView searchAgenda(
+            @RequestParam(name = "data-inicio")String dataInicio,
+            @RequestParam(name = "data-fim")String dataFim){
         ModelAndView mv = new ModelAndView("agendaPrestador");
         try {
             List<Agendamento> busca_agendamento = agendamentoService.findByData(dataInicio, dataFim);
