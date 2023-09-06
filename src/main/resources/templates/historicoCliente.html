@@ -16,7 +16,22 @@
 
                 <div th:if="${successMessage != null}" th:text="${successMessage}" class="alert alert-success" role="alert"></div>
                 <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger" role="alert"></div>
-
+                <form class="row" method="post" th:action="@{/cliente/historico/pesquisa}">
+                    <div class="col">
+                        <label for="data-inicio">Data de início</label>
+                        <input class="form-control" type="date" name="data-inicio" id="data-inicio" required>
+                    </div>
+                    <div class="col">
+                        <label for="data-fim">Data de finalização</label>
+                        <input class="form-control" type="date" name="data-fim" id="data-fim" required>
+                    </div>
+                    <div class="col d-flex flex-column-reverse">
+                        <button type="submit" class="btn btn-primary align-bottom">Buscar <i class="bi bi-search"></i></button>
+                    </div>
+                    <div class="col d-flex flex-column-reverse">
+                        <a th:href="@{/cliente/historico}" class="btn btn-secondary align-bottom">Todos os agendamentos</a>
+                    </div>
+                </form>
                 <table class="table w-100">
                     <thead>
                     <tr>
@@ -30,12 +45,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="agendamento : ${agendamentos}">
+                    <tr th:if="not ${busca_agendamento}" th:each="agendamento : ${agendamentos}">
                         <td>
                             <a href="#" data-bs-toggle="modal" th:data-bs-target="'#prestadorModal' + ${agendamento.id}">
                                 <span th:text="${agendamento.prestador.nome}"></span>
                             </a>
                         </td>
+                        <td th:text="${agendamento.prestador.nome} "></td>
                         <td th:text="${agendamento.servico.nome}"></td>
                         <td th:text="${agendamento.data}"></td>
                         <td th:text="${agendamento.hora}"></td>
@@ -103,7 +119,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr th:unless ="${busca_agendamento}" th:each="agendamento : ${busca_agendamento}">
                                     <td th:text="${#strings.defaultString(agendamento.prestador.nome, 'Não informado')}"></td>
                                     <td th:text="${#strings.defaultString(agendamento.prestador.email, 'Não informado')}"></td>
                                     <td th:text="${#strings.defaultString(agendamento.prestador.descricao, 'Não informado')}"></td>
