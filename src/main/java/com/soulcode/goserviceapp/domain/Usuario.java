@@ -34,10 +34,14 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Perfil perfil;
+    @Column
+    private String fotoUsuario;
 
     public Usuario(){
         this.habilitado =true;
     }
+
+
 
     public Usuario(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado){
         this.id=id;
@@ -94,6 +98,14 @@ public class Usuario implements UserDetails {
 
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
+    }
+
+    public String getFotoUsuario() {
+        return fotoUsuario;
+    }
+
+    public void setFotoUsuario(String fotoUsuario) {
+        this.fotoUsuario = fotoUsuario;
     }
 
     @Override

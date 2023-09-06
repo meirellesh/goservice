@@ -20,12 +20,14 @@ public class Cliente extends Usuario{
 
     private LocalDate dataNascimento;
 
+
+
     public Cliente() {
         super();
         setPerfil(Perfil.CLIENTE);
     }
 
-    public Cliente(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, String telefone, Endereco endereco, String cpf, LocalDate dataNascimento) {
+    public Cliente(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado, String telefone, Endereco endereco, String cpf, LocalDate dataNascimento, String urlFoto) {
         super(id, nome, email, senha, perfil, habilitado);
         this.telefone = telefone;
         this.endereco = endereco;
@@ -61,6 +63,8 @@ public class Cliente extends Usuario{
         this.dataNascimento = dataNascimento;
     }
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,6 +74,7 @@ public class Cliente extends Usuario{
                 Objects.equals(cpf, cliente.cpf) &&
                 Objects.equals(dataNascimento, cliente.dataNascimento) &&
                 Objects.equals(endereco, cliente.endereco);
+
     }
 
     public Endereco getEndereco() {
