@@ -46,18 +46,18 @@
                         <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" th:value="${cliente.dataNascimento}">
                         <div class="form-text"></div>
                     </div>
-                    <div class="imageUpload d-flex flex-column mt-4">
-                        <input type="file" class="inp form-control" onchange="getImageData(event)" accept="image/jpeg, image/jpg, image/png" />
-                        <span class="filedata"></span>
-                        <div class="uploadCompleto">
-                            <div class="custom-loader" role="status">
-                            </div>
+                    <di <div class="imageUpload d-flex flex-row mt-4 align-items-center" >
+                    <input type="file" id="inputFoto" class="inp form-control" onchange="getImageData(event)" accept="image/jpeg, image/jpg, image/png" />
+                    <span class="filedata"></span>
+                    <div class="uploadCompleto">
+                        <div class="custom-loader" role="status">
                         </div>
-                        <button type="button" id="upload" onclick="uploadImage()" class="upload btn my-3">Upload</button>
                     </div>
+                    <button type="button" id="upload" onclick="uploadImage()" class="upload btn btn-primary my-3">Upload</button>
+                </div>
                     </div>
+                    <button type="submit" class="btn btn-primary">Salvar <i class="bi bi-save2 ms-2"></i></button>
                     </div>
-                    <button type="submit" id="salvar" class="btn btn-primary">Salvar <i class="bi bi-save2 ms-2"></i></button>
                 </form>
             </div>
         </div>
