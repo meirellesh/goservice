@@ -9,13 +9,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.OptionalInt;
 
 @Service
 public class ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private EnderecoService enderecoService;
 
     public Cliente findAuthenticated(Authentication authentication){
         if (authentication != null && authentication.isAuthenticated()){
@@ -46,6 +48,7 @@ public class ClienteService {
         updatedCliente.setCpf(cliente.getCpf());
         updatedCliente.setDataNascimento(cliente.getDataNascimento());
         updatedCliente.setFotoUsuario(cliente.getFotoUsuario());
+        updatedCliente.setEndereco(cliente.getEndereco());
         return clienteRepository.save(updatedCliente);
     }
 }

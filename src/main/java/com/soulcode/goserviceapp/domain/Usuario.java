@@ -2,6 +2,7 @@ package com.soulcode.goserviceapp.domain;
 
 import com.soulcode.goserviceapp.domain.enums.Perfil;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -37,19 +38,32 @@ public class Usuario implements UserDetails {
     @Column
     private String fotoUsuario;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(nullable = false)
+    private Endereco endereco;
+
     public Usuario(){
-        this.habilitado =true;
+        this.habilitado = true;
+        this.endereco = new Endereco();
     }
 
+    public Usuario(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.perfil = perfil;
+        this.habilitado = habilitado;
+    }
 
-
-    public Usuario(Long id, String nome, String email, String senha, Perfil perfil, Boolean habilitado){
-        this.id=id;
-        this.nome=nome;
-        this.email=email;
-        this.senha=senha;
-        this.perfil=perfil;
-        this.habilitado=habilitado;
+    public Usuario(Long id, String nome, String email, String senha, Boolean habilitado, Perfil perfil, Endereco endereco) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.habilitado = habilitado;
+        this.perfil = perfil;
+        this.endereco = endereco;
     }
 
     public Long getId() {
@@ -108,6 +122,15 @@ public class Usuario implements UserDetails {
         this.fotoUsuario = fotoUsuario;
     }
 
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -148,7 +171,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nome, email, senha, perfil);
+        return Objects.hash(id, nome, email, senha, perfil, endereco);
     }
 
     @Override
@@ -160,6 +183,7 @@ public class Usuario implements UserDetails {
                 Objects.equals(nome, usuario.nome) &&
                 Objects.equals(email, usuario.email) &&
                 Objects.equals(senha, usuario.senha) &&
+                Objects.equals(endereco, usuario.endereco) &&
                 perfil == usuario.perfil;
     }
 }

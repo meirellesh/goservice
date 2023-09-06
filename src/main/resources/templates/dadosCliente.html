@@ -46,6 +46,7 @@
                         <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" th:value="${cliente.dataNascimento}">
                         <div class="form-text"></div>
                     </div>
+<<<<<<< Updated upstream
                     <di <div class="imageUpload d-flex flex-row mt-4 align-items-center" >
                     <input type="file" id="inputFoto" class="inp form-control" onchange="getImageData(event)" accept="image/jpeg, image/jpg, image/png" />
                     <span class="filedata"></span>
@@ -58,10 +59,57 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Salvar <i class="bi bi-save2 ms-2"></i></button>
                     </div>
+=======
+                    <button type="submit" class="btn btn-primary">Salvar<i class="bi bi-save2 ms-2"></i></button>
+>>>>>>> Stashed changes
                 </form>
             </div>
         </div>
+        </div>
     </div>
+<<<<<<< Updated upstream
+=======
+
+    <div class="content-wrap">
+        <div class="container my-4">
+            <div class="card w-100 mt-5">
+                <div class="card-body">
+                <h5 class="card-title mb-2">Alterar endereço</h5>
+                <form method="post" th:action="@{/cliente/dados/endereco}">
+                    <input type="hidden" name="id" th:field="*{endereco.id}">
+                    <div class="mb-3">
+                        <label for="rua" class="form-label">Rua<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="rua" name="rua" th:field="*{endereco.rua}">
+                        <div class="form-text"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="numero" class="form-label">Número da casa<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="numero" name="numero" th:field="*{endereco.numero}">
+                        <div class="form-text"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cidade" class="form-label">Cidade</label>
+                        <input type="text" class="form-control" id="cidade" name="cidade" th:field="*{endereco.cidade}">
+                        <div class="form-text"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="logradouro" class="form-label">Logradouro</label>
+                        <input type="text" class="form-control" id="logradouro" name="logradouro" th:field="*{endereco.logradouro}">
+                        <div class="form-text"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="uf" class="form-label">UF</label>
+                        <input type="text" class="form-control" id="uf" name="uf" th:field="*{endereco.uf}">
+                        <div class="form-text"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar <i class="bi bi-save2 ms-2"></i></button>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+>>>>>>> Stashed changes
     <div th:replace="fragments/footer:: footer"></div>
     </div>
 
