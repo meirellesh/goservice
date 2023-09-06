@@ -37,6 +37,9 @@ public class AgendamentoService {
 
     @Autowired
     private PrestadorService prestadorService;
+    public List<Agendamento>findByData(String dataInicio, String dataFIm){
+        return agendamentoRepository.findByData(dataInicio, dataFIm);
+    }
 
     public Agendamento findById(Long id){
         Optional<Agendamento> agendamento = agendamentoRepository.findById(id);
