@@ -45,6 +45,7 @@ public class ClienteService {
         updatedCliente.setTelefone(cliente.getTelefone());
         updatedCliente.setCpf(cliente.getCpf());
         updatedCliente.setDataNascimento(cliente.getDataNascimento());
+        updatedCliente.setFotoUsuario(cliente.getFotoUsuario());
         return clienteRepository.save(updatedCliente);
     }
 }

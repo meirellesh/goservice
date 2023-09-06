@@ -20,6 +20,7 @@
 
                 <form method="post" th:action="@{/cliente/dados}">
                     <input type="hidden" name="id" th:field="*{cliente.id}">
+                    <input type="hidden" name="urlImagem" id="urlImagem" th:field="*{cliente.fotoUsuario}">
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="nome" name="nome" th:field="*{cliente.nome}" required>
@@ -45,14 +46,25 @@
                         <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" th:value="${cliente.dataNascimento}">
                         <div class="form-text"></div>
                     </div>
-
-                    <button type="submit" class="btn btn-primary">Salvar <i class="bi bi-save2 ms-2"></i></button>
+                    <div class="imageUpload d-flex flex-column mt-4">
+                        <input type="file" class="inp form-control" onchange="getImageData(event)" accept="image/jpeg, image/jpg, image/png" />
+                        <span class="filedata"></span>
+                        <div class="uploadCompleto">
+                            <div class="custom-loader" role="status">
+                            </div>
+                        </div>
+                        <button type="button" id="upload" onclick="uploadImage()" class="upload btn my-3">Upload</button>
+                    </div>
+                    </div>
+                    </div>
+                    <button type="submit" id="salvar" class="btn btn-primary">Salvar <i class="bi bi-save2 ms-2"></i></button>
                 </form>
             </div>
         </div>
     </div>
-    </div>
     <div th:replace="fragments/footer:: footer"></div>
+    </div>
+
 </div>
 
 </body>
