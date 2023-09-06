@@ -120,6 +120,20 @@ public class PrestadorController {
         return mv;
     }
 
+    @PostMapping(value = "/agenda/pesquisa")
+    public ModelAndView searchAgenda(@RequestParam(name = "data-inicio")String dataInicio, @RequestParam(name = "data-fim")String dataFim){
+        ModelAndView mv = new ModelAndView("agendaPrestador");
+        try {
+            List<Agendamento> busca_agendamento = agendamentoService.findByData(dataInicio, dataFim);
+            mv.addObject("agendamentos", busca_agendamento);
+        }catch (AgendamentoNaoEncontradoException ex){
+            mv.addObject("errorMessage",  ex.getMessage());
+        }catch (Exception ex){
+            mv.addObject("errorMessage", "Erro ao Buscar Agendamento(s)");
+        }
+        return mv;
+    }
+
     @PostMapping(value = "/agenda/cancelar")
     public String cancelarAgendamento(
             @RequestParam(name = "agendamentoId") Long agendamentoId,
