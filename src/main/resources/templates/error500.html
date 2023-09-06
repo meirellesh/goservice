@@ -1,0 +1,20 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="fragments/layout :: layout(~{::title}, ~{::#content})">
+<head>
+    <title>Erro interno</title>
+</head>
+<body>
+
+<main id="content" class="d-flex flex-column justify-content-center align-items-center" style="min-height: 100vh">
+    <h1>Ops! Desculpe-nos, ocorreu um erro interno</h1>
+    <img th:src="@{/assets/img/errors/error500.png}" width="450px">
+    <h4>Estamos trabalhando para resolver o quanto antes!</h4>
+    <div class="mt-3 d-flex gap-3 flex-wrap">
+        <a href="/" class="btn btn-primary btn-sm flex-grow-1">
+            Voltar para home <i class="bi bi-house-fill ms-2"></i>
+        </a>
+    </div>
+</main>
+
+</body>
+</html>
